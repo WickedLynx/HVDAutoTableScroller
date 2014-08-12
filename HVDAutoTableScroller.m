@@ -34,6 +34,7 @@
     CGRect convertedKeyboardFrame = [window convertRect:_keyboardFrame toView:window];
     UITextField *activeField = [self.delegate activeTextFieldForAutoScroller:self];
     CGRect convertedFieldFrame = [activeField.superview convertRect:activeField.frame toView:window];
+    convertedFieldFrame.size.height += self.bottomPadding;
 
     if (CGRectIntersectsRect(convertedFieldFrame, convertedKeyboardFrame)) {
         CGFloat deltaY = ((convertedFieldFrame.origin.y + convertedFieldFrame.size.height) - convertedKeyboardFrame.origin.y) + self.bottomPadding;
@@ -41,8 +42,6 @@
         [UIView animateWithDuration:0.20f delay:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
             [tableView setContentInset:UIEdgeInsetsMake(tableView.contentInset.top -  deltaY, 0, 0, 0)];
         } completion:nil];
-    } else {
-        [self reset];
     }
 
 }
